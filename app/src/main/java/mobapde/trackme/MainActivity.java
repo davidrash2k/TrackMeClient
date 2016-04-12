@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.btnlogin);
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
+        //for ui testing
+        ImageView a = (ImageView) findViewById(R.id.img);
+        a.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), MainMenu.class);
+                startActivity(i);
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
