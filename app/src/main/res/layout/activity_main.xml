@@ -17,7 +17,13 @@
         android:layout_height="225dp"
         android:layout_gravity="center"
         android:src="@drawable/banner"
+        android:id="@+id/img"
         />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_login_email"
+        android:theme="@style/TextLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="250sp"
         android:layout_height="wrap_content"
@@ -26,20 +32,25 @@
         android:hint="Email"
         android:textColorHint="#fff"
         android:textSize="20sp"
-        android:gravity="center_horizontal"
         android:inputType="textEmailAddress"
         android:id="@+id/et_email" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_login_password"
+        android:theme="@style/TextLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:password="true"
+        android:inputType="textPassword"
         android:hint="Password"
         android:textColorHint="#fff"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:gravity="center_horizontal"
         android:id="@+id/et_password" />
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
@@ -60,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register now."
-        android:textColor="#88cfff"
+        android:textColor="#7994ff"
         android:id="@+id/reg"
         android:layout_gravity="center"
         />

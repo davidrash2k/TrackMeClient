@@ -12,7 +12,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">#ffffff</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">#ffffff</item>
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">#ffffff</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -21,11 +29,11 @@
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
     <style name="RedButton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#e4082c</item>
+        <item name="colorControlHighlight">#ef3755</item>
         <item name="colorButtonNormal">@color/red</item>
     </style>
     <style name="BlueButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#17079f</item>
-        <item name="colorButtonNormal">#173eff</item>
+        <item name="colorButtonNormal">#3857f1</item>
     </style>
 </resources>

@@ -1,5 +1,7 @@
 package mobapde.trackme;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +11,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ViewLocation extends FragmentActivity implements OnMapReadyCallback {
@@ -33,7 +38,11 @@ public class ViewLocation extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
+    public Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
+    }
 
     /**
      * Manipulates the map once available.
@@ -47,10 +56,15 @@ public class ViewLocation extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        // TODO Add a marker in location from db
+        LatLng loc = new LatLng(14.5649, 120.9939);
+        MarkerOptions marker = new MarkerOptions().position(loc).title("Current Location as of "+"Month 00, 2016 9:00pm").icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("logo",200,200)));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(loc)
+                .zoom(18).build();
+        //Zoom in and animate the camera.
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.addMarker(marker).showInfoWindow();
     }
 }
