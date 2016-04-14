@@ -15,6 +15,7 @@ public class User {
     private double longtitude;
     private String track_mode;
     private String track_interval;
+    private String status;
 
     public static final String TABLE_NAME = "user";
     public static final String COLUMN_ID = "id";
@@ -25,8 +26,9 @@ public class User {
     public static final String COLUMN_LOCATION = "location";
     private static final String COLUMN_LATITUDE = "latitute";
     private static final String COLUMN_LONGTITUDE = "longtitude";
-    private static final String COLUMN_TRACK_MODE = "TRACK_mode";
-    private static final String COLUMN_TRACK_INTERVAl = "TRACK_interval";
+    private static final String COLUMN_TRACK_MODE = "track_mode";
+    private static final String COLUMN_TRACK_INTERVAl = "track_interval";
+    private static final String COLUMN_STATUS = "status";
 
     public static final String SP_KEY_ID = "id";
     public static final String SP_KEY_NAME = "name";
@@ -37,6 +39,7 @@ public class User {
     public static final String SP_KEY_LONGTITUDE = "longtitude";
     public static final String SP_KEY_TRACK_MODE = "track_mode";
     public static final String SP_KEY_TRACK_INTERVAL = "track_interval";
+    public static final String SP_KEY_STATUS = "status";
 
 
     public User() {
@@ -55,7 +58,7 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String name, String mobileNumber, String email, String password, int code, double latitude, double longtitude, String track_mode, String track_interval) {
+    public User(int id, String name, String mobileNumber, String email, String password, int code, double latitude, double longtitude, String track_mode, String track_interval, String status) {
         this.id = id;
         this.name = name;
         this.mobileNumber = mobileNumber;
@@ -66,8 +69,8 @@ public class User {
         this.longtitude = longtitude;
         this.track_mode = track_mode;
         this.track_interval = track_interval;
+        this.status = status;
     }
-
 
     public int getId() {
         return id;
@@ -148,4 +151,8 @@ public class User {
     public void setTrack_interval(String track_interval) {
         this.track_interval = track_interval;
     }
+
+
+
 }
+

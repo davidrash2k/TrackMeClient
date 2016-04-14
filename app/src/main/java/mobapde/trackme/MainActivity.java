@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     EditText email;
     EditText password;
     Boolean isAuthenticated;
-    final static String URL_PART ="http://192.168.1.38:8080";
+    final static String URL_PART ="http://10.100.211.43:8080";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String loginAndUserDetails[] = new String[9];
+            String loginAndUserDetails[] = new String[11];
             loginAndUserDetails = s.split(" ");
             isAuthenticated = Boolean.parseBoolean(loginAndUserDetails[0]);
             if(isAuthenticated) {
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[7]);
                 spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[8]);
                 spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[9]);
+                spEditor.putString(User.SP_KEY_STATUS, loginAndUserDetails[10]);
                 spEditor.clear(); //clear everything
                 spEditor.commit();
 
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String loginAndUserDetails[] = new String[7];
+            String loginAndUserDetails[] = new String[11];
             loginAndUserDetails = s.split(" ");
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -210,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[7]);
             spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[8]);
             spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[9]);
+            spEditor.putString(User.SP_KEY_STATUS, loginAndUserDetails[10]);
             spEditor.clear(); //clear everything
             spEditor.commit();
 
