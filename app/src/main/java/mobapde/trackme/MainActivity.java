@@ -29,14 +29,12 @@ public class MainActivity extends AppCompatActivity {
     EditText email;
     EditText password;
     Boolean isAuthenticated;
-    final static String URL_PART ="http://10.100.211.43:8080";
+    final static String URL_PART ="http://192.168.1.34:8080";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        isAuthenticated  = false;
 
         register = (TextView) findViewById(R.id.reg);
         login = (Button) findViewById(R.id.btnlogin);
@@ -74,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
         new UrlHelper().execute(email + " " + password);
     }
 
+  /*
     private void getUserDetails(String email, String password){
-        //connect to server
+
         new UrlHelper2().execute(email + " " + password);
     }
+*/
 
 
     //===============================URL HELPERS===============================
@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             String result = "None";
             String loginDetails[] = new String[2];
             loginDetails = params[0].split(" ");
-            System.out.println("USER DETAILS: " + loginDetails.length);
 
             //used for sending data to server
             if(params[0] != null) {
@@ -110,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     Response response;
                     response = client.newCall(request).execute();
                     result = response.body().string();
+                    System.out.println("result:" + result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -124,30 +124,50 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             String loginAndUserDetails[] = new String[11];
+            String name = "", status = "";
+
+
             loginAndUserDetails = s.split(" ");
             isAuthenticated = Boolean.parseBoolean(loginAndUserDetails[0]);
+
+
             if(isAuthenticated) {
                 //save user details in local database
-                Intent i = new Intent(getBaseContext(), MainMenu.class);
-                startActivity(i);
-                Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_SHORT).show();
+
+              //  Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_SHORT).show();
 
                 //load user details in local database
 
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 SharedPreferences.Editor spEditor = sp.edit();
                 spEditor.putString(User.SP_KEY_ID, loginAndUserDetails[1]);
-                spEditor.putString(User.SP_KEY_NAME, loginAndUserDetails[2]);
-                spEditor.putString(User.SP_KEY_EMAIL, loginAndUserDetails[3]);
-                spEditor.putString(User.SP_KEY_PASSWORD, loginAndUserDetails[4]);
+
+
+                name = loginAndUserDetails[2].replace("1", " ");
+
+                spEditor.putString(User.SP_KEY_NAME, name);
+                spEditor.putString(User.SP_KEY_NUMBER, loginAndUserDetails[3]);
+                spEditor.putString(User.SP_KEY_EMAIL, loginAndUserDetails[4]);
                 spEditor.putString(User.SP_KEY_CODE, loginAndUserDetails[5]);
                 spEditor.putString(User.SP_KEY_LATITUDE, loginAndUserDetails[6]);
                 spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[7]);
                 spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[8]);
                 spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[9]);
-                spEditor.putString(User.SP_KEY_STATUS, loginAndUserDetails[10]);
+
+
+                status =  loginAndUserDetails[10].replace("1", " ");
+
+                spEditor.putString(User.SP_KEY_STATUS, status);
                 spEditor.clear(); //clear everything
                 spEditor.commit();
+
+
+                Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(getBaseContext(), MainMenu.class);
+                startActivity(i);
+
+
 
             }else{
                 Toast.makeText(getBaseContext(), "Incorrect email and/or password", Toast.LENGTH_SHORT).show();
@@ -157,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+/*
 
     public class UrlHelper2 extends AsyncTask<String, Void, String> {
         @Override
@@ -197,26 +217,28 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String loginAndUserDetails[] = new String[11];
+            String loginAndUserDetails[] = new String[10];
             loginAndUserDetails = s.split(" ");
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             SharedPreferences.Editor spEditor = sp.edit();
-            spEditor.putString(User.SP_KEY_ID, loginAndUserDetails[1]);
-            spEditor.putString(User.SP_KEY_NAME, loginAndUserDetails[2]);
-            spEditor.putString(User.SP_KEY_EMAIL, loginAndUserDetails[3]);
-            spEditor.putString(User.SP_KEY_PASSWORD, loginAndUserDetails[4]);
-            spEditor.putString(User.SP_KEY_CODE, loginAndUserDetails[5]);
-            spEditor.putString(User.SP_KEY_LATITUDE, loginAndUserDetails[6]);
-            spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[7]);
-            spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[8]);
-            spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[9]);
-            spEditor.putString(User.SP_KEY_STATUS, loginAndUserDetails[10]);
+            spEditor.putString(User.SP_KEY_ID, loginAndUserDetails[0]);
+            spEditor.putString(User.SP_KEY_NAME, loginAndUserDetails[1]);
+            spEditor.putString(User.SP_KEY_EMAIL, loginAndUserDetails[2]);
+            spEditor.putString(User.SP_KEY_PASSWORD, loginAndUserDetails[3]);
+            spEditor.putString(User.SP_KEY_CODE, loginAndUserDetails[4]);
+            spEditor.putString(User.SP_KEY_LATITUDE, loginAndUserDetails[5]);
+            spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[6]);
+            spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[7]);
+            spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[8]);
+            spEditor.putString(User.SP_KEY_STATUS, loginAndUserDetails[9]);
             spEditor.clear(); //clear everything
             spEditor.commit();
 
         }
     }
+
+    */
 
 
 }

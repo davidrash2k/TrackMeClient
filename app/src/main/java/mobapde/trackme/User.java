@@ -9,7 +9,7 @@ public class User {
     private String name;
     private String mobileNumber;
     private String email;
-    private String password;
+  //  private String password;
     private int code;
     private double latitude;
     private double longtitude;
@@ -17,11 +17,13 @@ public class User {
     private String track_interval;
     private String status;
 
+
     public static final String TABLE_NAME = "user";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_NUMBER = "mobileNumber";
     public static final String COLUMN_EMAIL = "email";
-    public static final String COLUMN_PASSWORD = "password";
+   // public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_CODE = "code";
     public static final String COLUMN_LOCATION = "location";
     private static final String COLUMN_LATITUDE = "latitute";
@@ -32,8 +34,9 @@ public class User {
 
     public static final String SP_KEY_ID = "id";
     public static final String SP_KEY_NAME = "name";
+    public static final String SP_KEY_NUMBER = "mobileNumber";
     public static final String SP_KEY_EMAIL = "email";
-    public static final String SP_KEY_PASSWORD = "password";
+   // public static final String SP_KEY_PASSWORD = "password";
     public static final String SP_KEY_CODE = "code";
     public static final String SP_KEY_LATITUDE = "latitude";
     public static final String SP_KEY_LONGTITUDE = "longtitude";
@@ -51,19 +54,18 @@ public class User {
         this.name = name;
     }
 
-    public User(String name, String mobileNumber, String email, String password) {
+    public User(String name, String mobileNumber, String email) {
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.email = email;
-        this.password = password;
+
     }
 
-    public User(int id, String name, String mobileNumber, String email, String password, int code, double latitude, double longtitude, String track_mode, String track_interval, String status) {
+    public User(int id, String name, String mobileNumber, String email, int code, double latitude, double longtitude, String track_mode, String track_interval, String status) {
         this.id = id;
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.email = email;
-        this.password = password;
         this.code = code;
         this.latitude = latitude;
         this.longtitude = longtitude;
@@ -104,13 +106,7 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public int getCode() {
         return code;
@@ -150,6 +146,14 @@ public class User {
 
     public void setTrack_interval(String track_interval) {
         this.track_interval = track_interval;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

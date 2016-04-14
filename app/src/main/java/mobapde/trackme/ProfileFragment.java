@@ -47,6 +47,16 @@ public class ProfileFragment extends Fragment{
         //DISPLAY USER DATA IN PROFILE
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(v.getContext());
         tv_name.setText(sp.getString(User.SP_KEY_NAME, null));
+        tv_email.setText(sp.getString(User.SP_KEY_EMAIL, null));
+
+        tv_trackMode.setText(  "Track Mode: " + sp.getString(User.SP_KEY_TRACK_MODE, null));
+        tv_code.setText(sp.getString(User.SP_KEY_CODE, null));
+
+        //process latitude and longtitude to get location name
+        //tv_location.setText();
+
+        tv_status.setText(sp.getString(User.SP_KEY_STATUS, null));
+
 
         mode = (FloatingActionButton) v.findViewById(R.id.fabmode);
         destination = (FloatingActionButton) v.findViewById(R.id.fabdestination);
@@ -79,5 +89,15 @@ public class ProfileFragment extends Fragment{
 
         return v;
     }
+
+
+
+
+
+
+
+
+
+
 
 }
