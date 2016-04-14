@@ -13,7 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.widget.Button;
 
 public class TrackeeDetails extends AppCompatActivity {
-    Button track,remove;
+    Button track, remove;
     FloatingActionButton fab;
 
     @Override
@@ -29,7 +29,30 @@ public class TrackeeDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "0123456789"));
                 //TODO fix permission request for android 6.0 devices
-                startActivity(i);
+                if (ActivityCompat.checkSelfPermission(TrackeeDetails.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                     if (ActivityCompat.shouldShowRequestPermissionRationale(TrackeeDetails.this,
+                            Manifest.permission.CALL_PHONE)) {
+
+                        // Show an expanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+
+                    } else {
+
+                        // No explanation needed, we can request the permission.
+
+                        ActivityCompat.requestPermissions(TrackeeDetails.this,
+                                new String[]{Manifest.permission.CALL_PHONE},
+                                1);
+
+                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                        // app-defined int constant. The callback method gets the
+                        // result of the request.
+                    }
+                }
+                else {
+                    startActivity(i);
+                }
             }
         });
         track.setOnClickListener(new View.OnClickListener() {

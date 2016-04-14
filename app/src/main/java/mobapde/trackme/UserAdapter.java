@@ -35,6 +35,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    System.out.println("POSITION"+getAdapterPosition());
+                    //getadapterposition and display proper profile
                     Intent i = new Intent(v.getContext(),TrackeeDetails.class);
                     context.startActivity(i);
                 }

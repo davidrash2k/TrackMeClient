@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -24,6 +25,7 @@ public class SetDestinationActivity extends FragmentActivity implements OnMapRea
 
     private GoogleMap mMap;
     private Button close,setdestination;
+    MarkerOptions marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,17 +100,33 @@ public class SetDestinationActivity extends FragmentActivity implements OnMapRea
                 // result of the request.
             }
         }
-
+            else {
             mMap.setMyLocationEnabled(true);
-
+        }
 
 
         // Add a marker in Sydney and move the camera
-        LatLng loc = new LatLng(0, 0);
-        MarkerOptions marker = new MarkerOptions().position(loc).draggable(true).title("My Destination").icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("logo",200,200)));
-
+        LatLng loc = new LatLng(14.5649, 120.9939);
+        marker = new MarkerOptions().position(loc).title("My Destination").icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("logo",200,200)));
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(loc)
+                .zoom(16).build();
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.addMarker(marker);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition position) {
+
+                // Get the center of the Map.
+                LatLng centerOfMap = mMap.getCameraPosition().target;
+
+                // Update your Marker's position to the center of the Map.
+
+                marker.position(centerOfMap);
+                mMap.clear();
+                mMap.addMarker(marker).showInfoWindow();
+            }
+        });
 
     }
 }
