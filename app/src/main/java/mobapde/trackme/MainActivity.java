@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            String loginAndUserDetails[] = new String[7];
+            String loginAndUserDetails[] = new String[9];
             loginAndUserDetails = s.split(" ");
             isAuthenticated = Boolean.parseBoolean(loginAndUserDetails[0]);
             if(isAuthenticated) {
@@ -131,7 +131,10 @@ public class MainActivity extends AppCompatActivity {
                 spEditor.putString(User.SP_KEY_EMAIL, loginAndUserDetails[3]);
                 spEditor.putString(User.SP_KEY_PASSWORD, loginAndUserDetails[4]);
                 spEditor.putString(User.SP_KEY_CODE, loginAndUserDetails[5]);
-                spEditor.putString(User.SP_KEY_LOCATION, loginAndUserDetails[6]);
+                spEditor.putString(User.SP_KEY_LATITUDE, loginAndUserDetails[6]);
+                spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[7]);
+                spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[8]);
+                spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[9]);
                 spEditor.clear(); //clear everything
                 spEditor.commit();
 
@@ -193,7 +196,10 @@ public class MainActivity extends AppCompatActivity {
             spEditor.putString(User.SP_KEY_EMAIL, loginAndUserDetails[3]);
             spEditor.putString(User.SP_KEY_PASSWORD, loginAndUserDetails[4]);
             spEditor.putString(User.SP_KEY_CODE, loginAndUserDetails[5]);
-            spEditor.putString(User.SP_KEY_LOCATION, loginAndUserDetails[7]);
+            spEditor.putString(User.SP_KEY_LATITUDE, loginAndUserDetails[6]);
+            spEditor.putString(User.SP_KEY_LONGTITUDE, loginAndUserDetails[7]);
+            spEditor.putString(User.SP_KEY_TRACK_MODE, loginAndUserDetails[8]);
+            spEditor.putString(User.SP_KEY_TRACK_INTERVAL, loginAndUserDetails[9]);
             spEditor.clear(); //clear everything
             spEditor.commit();
 
