@@ -2,6 +2,8 @@ package mobapde.trackme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>{
 
-    private List<User> userList;
+    public List<User> userList;
 
     public UserAdapter(List<User> userList) {
         this.userList = userList;
@@ -37,13 +39,29 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 public void onClick(View v) {
                     System.out.println("POSITION"+getAdapterPosition());
                     //getadapterposition and display proper profile
-                    Intent i = new Intent(v.getContext(),TrackeeDetails.class);
+                    Intent i = new Intent(v.getContext(), TrackeeDetails.class);
+
+                    //get user list item
+
+                    //get item id
+
+                    //send item id as extra
+
                     context.startActivity(i);
                 }
             });
 
         }
 
+    }
+
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     @Override

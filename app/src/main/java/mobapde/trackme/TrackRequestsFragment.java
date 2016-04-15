@@ -30,7 +30,7 @@ import okhttp3.Response;
 
 public class TrackRequestsFragment extends Fragment {
     RecyclerView recycler;
-    RequestAdapter requestadapter;
+   public RequestAdapter requestadapter;
     String jsonString;
     View v;
 
@@ -61,7 +61,7 @@ public class TrackRequestsFragment extends Fragment {
         return v;
     }
 
-    private void getUserTrackRequests(){
+    public void getUserTrackRequests(){
         new UrlHelper().execute();
     }
 

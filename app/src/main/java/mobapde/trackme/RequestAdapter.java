@@ -28,6 +28,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
 
     private List<User> userList;
+    private View v2;
 
 
     public RequestAdapter(List<User> userList) {
@@ -74,6 +75,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 System.out.println("POSITION" + position);
                 //delete
 
+
             }
         });
         holder.accept.setOnClickListener(new View.OnClickListener() {
@@ -91,61 +93,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
     public int getItemCount() {
         return userList.size();
     }
-
-
-    public class UrlHelperAccept extends AsyncTask<String, Void, String> {
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            OkHttpClient client = new OkHttpClient();
-            String url = MainActivity.URL_PART + "/TrackMeServerV2/ControllerServlet";
-            String result = "None";
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(.getContext());
-
-            //used for sending data to server
-
-            RequestBody requestBody = new FormBody.Builder()
-                    .add("servlet", "updateStatusArrived")
-                    .add("id", sp.getString(User.SP_KEY_ID,null))
-                    .add("status", "Arrived").build();
-
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(requestBody)
-                    .build();
-
-
-            try {
-                Response response;
-                response = client.newCall(request).execute();
-                result = response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-
-
-            return result;
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            /*
-            System.out.println("Server Response: " + s);
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(v.getContext());
-            SharedPreferences.Editor spEditor = sp.edit();
-            spEditor.putString(User.SP_KEY_TRACK_MODE, s);
-            tv_trackMode = (TextView) v.findViewById(R.id.tv_trackMode);
-            tv_trackMode.setText(  "Track Mode: " + sp.getString(User.SP_KEY_TRACK_MODE, null));
-            */
-        }
-    }
-
 
 
 
