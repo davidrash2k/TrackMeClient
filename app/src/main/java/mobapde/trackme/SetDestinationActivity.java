@@ -1,16 +1,21 @@
 package mobapde.trackme;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,11 +26,20 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class SetDestinationActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button close,setdestination;
     MarkerOptions marker;
+    LatLng centerOfMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +59,9 @@ public class SetDestinationActivity extends FragmentActivity implements OnMapRea
         setdestination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 finish();
             }
         });
@@ -118,7 +135,7 @@ public class SetDestinationActivity extends FragmentActivity implements OnMapRea
             public void onCameraChange(CameraPosition position) {
 
                 // Get the center of the Map.
-                LatLng centerOfMap = mMap.getCameraPosition().target;
+                centerOfMap = mMap.getCameraPosition().target;
 
                 // Update your Marker's position to the center of the Map.
 
@@ -129,4 +146,57 @@ public class SetDestinationActivity extends FragmentActivity implements OnMapRea
         });
 
     }
+
+
+
+
+    public class UrlHelper extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            OkHttpClient client = new OkHttpClient();
+            String url = MainActivity.URL_PART + "/TrackMeServerV2/ControllerServlet";
+            String result = "None";
+            String loginDetails[] = new String[2];
+            loginDetails = params[0].split(" ");
+
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+            //used for sending data to server
+
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("servlet", "updateUserLocation")
+                        .add("id", sp.getString(User.SP_KEY_ID,null))
+                        .add("latitude", String.valueOf(centerOfMap.latitude))
+                        .add("longitude",String.valueOf(centerOfMap.longitude)).build();
+
+
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
+
+
+                try {
+                    Response response;
+                    response = client.newCall(request).execute();
+                    result = response.body().string();
+                    System.out.println("result:" + result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+    }
+
 }

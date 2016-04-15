@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     EditText email;
     EditText password;
     Boolean isAuthenticated;
-    final static String URL_PART ="http://192.168.1.34:8080";
+    final static String URL_PART ="http://192.168.43.72:8080";
+
     //private SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
 

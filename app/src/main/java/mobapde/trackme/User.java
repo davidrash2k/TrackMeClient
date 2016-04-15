@@ -49,6 +49,11 @@ public class User {
 
     }
 
+    public User(int id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public User(String name, String email) {
         this.email = email;
         this.name = name;

@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,24 +31,25 @@ import okhttp3.Response;
 public class TrackRequestsFragment extends Fragment {
     RecyclerView recycler;
     RequestAdapter requestadapter;
+    String jsonString;
     View v;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        System.out.println("ONCREATE");
+         List<User> userList = new ArrayList();
 
-        List aa = new ArrayList();
-        aa.add(new User("Johnny", "johnny@gmail.com"));
-        aa.add(new User("Alan", "alan@gmail.com"));
-        aa.add(new User("Janey", "janeyjane@gmail.com"));
-        aa.add(new User("Manny", "manny2354@gmail.com"));
-        aa.add(new User("Allie", "allie134134@gmail.com"));
-        requestadapter = new RequestAdapter(aa);
-
+       // userList.add(new User(1,"TEST"));
+        requestadapter = new RequestAdapter(userList);
+         getUserTrackRequests();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("ONCREATEVIEW");
          v = inflater.inflate(R.layout.trackrequests, container, false);
         recycler = (RecyclerView) v.findViewById(R.id.requests);
         recycler.setHasFixedSize(true);
@@ -57,7 +61,6 @@ public class TrackRequestsFragment extends Fragment {
         return v;
     }
 
-
     private void getUserTrackRequests(){
         new UrlHelper().execute();
     }
@@ -67,13 +70,14 @@ public class TrackRequestsFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             OkHttpClient client = new OkHttpClient();
+            String result = "";
             String url = MainActivity.URL_PART + "/TrackMeServerV2/ControllerServlet";
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(v.getContext());
 
             //used for sending data to server
-            if(params[0] != null) {
+
                 RequestBody requestBody = new FormBody.Builder()
-                        .add("servlet", "getUserTrackRequests")
+                        .add("servlet", "getTrackRequestList")
                         .add("id", sp.getString(User.SP_KEY_ID, null)).build();
 
 
@@ -86,24 +90,43 @@ public class TrackRequestsFragment extends Fragment {
                 try {
                     Response response;
                     response = client.newCall(request).execute();
-                   // result = response.body().string();
-                   // System.out.println("result:" + result);
+                    result = response.body().string();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-            }
 
 
-            //return result;
 
-            return "";
+            return result;
+
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+
+            List trackerList = new ArrayList();
+
+            try {
+
+
+                JSONArray jsonArray = new JSONArray(s);
+                for(int i = 0; i < jsonArray.length(); i++) {
+                    int id = jsonArray.getJSONObject(i).getInt(User.COLUMN_ID);
+                    String name = jsonArray.getJSONObject(i).getString(User.COLUMN_NAME);
+                    trackerList.add(new User(id,name));
+                    System.out.println();
+                }
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            requestadapter.setUserList(trackerList);
+            requestadapter.notifyDataSetChanged();
         }
     }
 

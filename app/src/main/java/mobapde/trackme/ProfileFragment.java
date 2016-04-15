@@ -120,7 +120,7 @@ public class ProfileFragment extends Fragment{
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(v.getContext());
 
             //used for sending data to server
-            if(params[0] != null) {
+
                 RequestBody requestBody = new FormBody.Builder()
                         .add("servlet", "updateStatusArrived")
                         .add("id", sp.getString(User.SP_KEY_ID,null))
@@ -141,7 +141,7 @@ public class ProfileFragment extends Fragment{
                     e.printStackTrace();
                 }
 
-            }
+
 
 
             return result;
