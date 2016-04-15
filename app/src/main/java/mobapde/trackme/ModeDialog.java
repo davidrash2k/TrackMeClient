@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -24,6 +25,9 @@ import okhttp3.Response;
  */
 public class ModeDialog extends DialogFragment{
     View v;
+    private TextView tv_trackMode;
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -95,7 +99,14 @@ public class ModeDialog extends DialogFragment{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            /*
             System.out.println("Server Response: " + s);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+            SharedPreferences.Editor spEditor = sp.edit();
+            spEditor.putString(User.SP_KEY_TRACK_MODE, s);
+            tv_trackMode = (TextView) v.findViewById(R.id.tv_trackMode);
+            tv_trackMode.setText(  "Track Mode: " + sp.getString(User.SP_KEY_TRACK_MODE, null));
+            */
         }
     }
 

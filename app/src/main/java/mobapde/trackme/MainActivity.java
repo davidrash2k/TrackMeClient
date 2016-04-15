@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     EditText password;
     Boolean isAuthenticated;
     final static String URL_PART ="http://192.168.1.34:8080";
+    //private SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     */
+
+
 
 
 }
